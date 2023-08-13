@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
-class Book
+use App\Kernel\AbstractModel;
+
+class Book extends AbstractModel
 {
     private $id;
     private $name;

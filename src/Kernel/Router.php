@@ -6,31 +6,35 @@ class Router
 {
     private array $routes = [];
 
-    public function add(string $route, string $requestMethod, string $classController, string $method): self
+    public function addGet(string $route, string $classController, string $method): self
     {
-        $this->routes[$requestMethod][$route] = [
+        if (!in_array(AbstractController::class, class_parents($classController))) {
+            return $this;
+        }
+        if (!method_exists($classController, $method)) {
+            return $this;
+        }
+
+        $this->routes[Request::GET][$route] = [
             'controller' => $classController,
             'method' => $method
         ];
         return $this;
     }
 
-    public function handleRequest(Request $request)
+    public function handleRequest(Request $request): Response
     {
-        $routes = $this->routes[$request->getMethod()];
-
-        $matchRoute = $routes[$request->getUrl()] ?? false;
-
-        if (!$matchRoute) {
-            foreach ($routes as $pattern => $route) {
-                $matches = sscanf($request->getUrl(), $pattern);
-                if (!empty($matches)) {
-                    $matchRoute = $route;
-                    break;
-                }
-            }
+        $routes = $this->routes[$request->getMethod()] ?? false;
+        if (!$routes) {
+            return Response::render('404');
         }
 
+        foreach ($routes as $pattern=>$route){
+            $pattern = '^(' .$pattern. '){1}$';
+            $r = preg_match($pattern,$request->getUrl());
+        }
+
+        $matchRoute = $routes[$url['path']] ?? false;
 
         if (!$matchRoute) {
             return Response::render('404');

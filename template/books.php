@@ -8,11 +8,20 @@
 <body>
 <h1>Books</h1>
 <ul>
-    <?php /** @var \App\Model\Book $book */ ?>
     <?php foreach ($values as $book): ?>
-        <li><a href="/book/<?= $book->getId() ?>">
-                <?= $book->getName() ?>
-            </a></li>
+        <li>
+            <?php if ($book['page_first']): ?>
+                <a href="/book/<?= $book['id'] ?>/page/<?= $book['page_first'] ?>">
+                    <?= $book['name'] ?>
+                </a>
+                <p><?= $book['page_count'] ?> страниц</p>
+            <?php else: ?>
+                <p><?= $book['name'] ?></p>
+            <?php endif; ?>
+            <?php foreach ($book['authors'] as $author): ?>
+                <p><?= $author ?></p>
+            <?php endforeach; ?>
+        </li>
     <?php endforeach; ?>
 </ul>
 <div>

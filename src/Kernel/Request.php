@@ -14,7 +14,7 @@ class Request
     {
         $request = new Request();
         $request->method = $_SERVER['REQUEST_METHOD'];
-        $request->url = $_SERVER['REQUEST_URI'];
+        $request->url = substr(parse_url($_SERVER['REQUEST_URI'])['path'],1);
         $request->params = $_REQUEST;
         return $request;
     }

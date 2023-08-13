@@ -2,31 +2,18 @@
 
 namespace App\Model;
 
-class Page
+use App\Kernel\AbstractModel;
+
+class Page extends AbstractModel
 {
     private $id;
-    private $name;
+    private $text;
 
-    public static function getTable():string
+    public static function getTable(): string
     {
         return 'book';
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return mixed
@@ -34,5 +21,13 @@ class Page
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 }
