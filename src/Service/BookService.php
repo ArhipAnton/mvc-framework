@@ -8,9 +8,24 @@ use App\Model\Repository\PageRepository;
 
 class BookService
 {
-    public static function getBookListInfo()
+    public static function getBookListInfo(): array
     {
         $books = (new BookRepository())->getAllBooks();
+        return self::addSideInfo($books);
+    }
+
+    public static function getBookSearchInfo($bookName, $authorName): array
+    {
+        $books = (new BookRepository())->findBooks($bookName, $authorName);
+        return self::addSideInfo($books);
+    }
+
+    private static function addSideInfo(array $books): array
+    {
+        if (empty($books)) {
+            return [];
+        }
+
         $ids = array_column($books, 'id');
         $authors = (new AuthorRepository())->getAuthorsForBooks($ids);
         $pages = (new PageRepository())->getPageInfoForBooks($ids);

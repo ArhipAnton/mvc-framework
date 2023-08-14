@@ -2,7 +2,7 @@ FROM php:8.2-fpm
 
 RUN apt-get update && apt-get -y install zip git libpq-dev libicu-dev libzip-dev \
     && docker-php-ext-configure zip \
-    && docker-php-ext-install zip opcache pgsql pdo_pgsql \
+    && docker-php-ext-install zip opcache pgsql pdo_pgsql postgresql-client\
     && pecl install apcu \
     && docker-php-ext-enable apcu \
     && pecl install xdebug \

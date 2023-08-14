@@ -6,11 +6,16 @@ use App\Kernel\AbstractModel;
 
 class Author extends AbstractModel
 {
-    private $id;
-    private $name;
+    private int $id;
+    private string $name;
 
     public static function getTable()
     {
         return 'author';
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

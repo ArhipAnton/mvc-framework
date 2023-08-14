@@ -6,28 +6,27 @@ use App\Kernel\AbstractModel;
 
 class Page extends AbstractModel
 {
-    private $id;
-    private $text;
+    private int $id;
+    private string $text;
+    private int $num;
 
     public static function getTable(): string
     {
-        return 'book';
+        return 'page';
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
+    }
+
+    public function getNum(): int
+    {
+        return $this->num;
     }
 }

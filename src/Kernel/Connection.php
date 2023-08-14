@@ -2,7 +2,6 @@
 
 namespace App\Kernel;
 
-use Exception;
 use PDO;
 
 class Connection

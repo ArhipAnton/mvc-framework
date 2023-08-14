@@ -33,9 +33,9 @@ class PageRepository extends AbstractRepository
             and p.id = ' . $pageId . '
             ;');
         $res = $st->execute();
-        $r = $st->fetchObject(Page::class);
+        $res = $st->fetchObject(Page::class);
 
-        return $r;
+        return $res;
     }
 
     public function getPageList(int $bookId): array
@@ -44,6 +44,7 @@ class PageRepository extends AbstractRepository
             'select *
             from page p 
             where p.book_id = ' . $bookId . '
+            order by p.num
             ;');
         $res = $st->execute();
 

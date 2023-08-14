@@ -7,7 +7,7 @@ use App\Kernel\Response;
 
 class HomeController extends AbstractController
 {
-    public function menuAction()
+    public function menuAction(): Response
     {
         return Response::render('menu');
     }

@@ -9,31 +9,30 @@ use App\Service\BookService;
 
 class BookController extends AbstractController
 {
-    public function listAction(array $params = [])
+    public function listAction(array $params = []): Response
     {
         $books = BookService::getBookListInfo();
 
         return Response::render('books', $books);
     }
 
-    public function pageAction(array $params = [])
+    public function pageAction(array $params = []): Response
     {
-        $book = (int)$params[0];
-        $page = (int)$params[1];
-        $page = (new PageRepository())->getPage($book, $page);
+        $book = (int)$params[1];
+        $currentPage = (int)$params[2];
+        $page = (new PageRepository())->getPage($book, $currentPage);
         $pageList = (new PageRepository())->getPageList($book);
 
-        return Response::render('page', [$page, $pageList]);
+        return Response::render('page', [$book, $currentPage, $page, $pageList]);
     }
 
-    public function searchAction(array $params = [])
+    public function searchAction(array $params = [], array $getParams = []): Response
     {
-        $book = (int)$params[0];
-        $page = (int)$params[1];
-        $page = (new PageRepository())->getPage($book, $page);
-        $pageList = (new PageRepository())->getPageList($book);
+        $bookName = $getParams['book'] ?? false;
+        $authorName = $getParams['author'] ?? false;
+        $books = BookService::getBookSearchInfo($bookName, $authorName);
 
-        return Response::render('book/page', $page, $pageList);
+        return Response::render('books', $books);
     }
 
 }

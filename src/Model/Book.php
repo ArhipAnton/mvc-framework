@@ -6,34 +6,25 @@ use App\Kernel\AbstractModel;
 
 class Book extends AbstractModel
 {
-    private $id;
-    private $name;
+    private int $id;
+    private string $name;
 
-    public static function getTable():string
+    public static function getTable(): string
     {
         return 'book';
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
     public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

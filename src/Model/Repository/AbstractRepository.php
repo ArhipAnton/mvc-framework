@@ -14,7 +14,7 @@ class AbstractRepository
         $this->connection = Application::getConnection();
     }
 
-    public function getConnection()
+    public function getConnection(): PDO
     {
         return $this->connection;
     }

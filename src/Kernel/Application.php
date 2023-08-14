@@ -46,11 +46,9 @@ class Application
         try {
             $response = $this->router->handleRequest($request);
         } catch (Exception $exception) {
-            return Response::render('error', [$exception->getMessage()]);
+            return Response::render('error', [$exception->getMessage()], 500);
         }
 
         return $response;
     }
-
-
 }

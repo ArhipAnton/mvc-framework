@@ -1,0 +1,304 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.8
+-- Dumped by pg_dump version 14.9 (Ubuntu 14.9-1.pgdg20.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: books; Type: DATABASE; Schema: -; Owner: admin
+--
+
+CREATE DATABASE books WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE books OWNER TO admin;
+
+\connect books
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: author; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.author (
+    id integer NOT NULL,
+    name character varying NOT NULL
+);
+
+
+ALTER TABLE public.author OWNER TO admin;
+
+--
+-- Name: author_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+ALTER TABLE public.author ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.author_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: book; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.book (
+    id integer NOT NULL,
+    name character varying NOT NULL
+);
+
+
+ALTER TABLE public.book OWNER TO admin;
+
+--
+-- Name: book_author; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.book_author (
+    id integer NOT NULL,
+    book_id integer NOT NULL,
+    author_id integer NOT NULL
+);
+
+
+ALTER TABLE public.book_author OWNER TO admin;
+
+--
+-- Name: book_author_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+ALTER TABLE public.book_author ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.book_author_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: book_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+ALTER TABLE public.book ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.book_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: page; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.page (
+    id integer NOT NULL,
+    num integer NOT NULL,
+    text text,
+    book_id integer
+);
+
+
+ALTER TABLE public.page OWNER TO admin;
+
+--
+-- Name: page_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+ALTER TABLE public.page ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.page_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Data for Name: author; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.author (id, name) FROM stdin;
+1	Пушкин А.С.
+2	Ландау Л.Д.
+3	Лифшиц Е.М
+\.
+
+
+--
+-- Data for Name: book; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.book (id, name) FROM stdin;
+2	Евгений Онегин
+3	Дубровский
+4	Теоритическая Физика
+1	Капитанская дочка
+\.
+
+
+--
+-- Data for Name: book_author; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.book_author (id, book_id, author_id) FROM stdin;
+1	1	1
+2	2	1
+3	3	1
+4	4	2
+5	4	3
+\.
+
+
+--
+-- Data for Name: page; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.page (id, num, text, book_id) FROM stdin;
+1	1	\nОтец мой Андрей Петрович Гринев в молодости своей служил при графе Минихе и вышел в отставку премьер-майором в 17.. году. С тех пор жил он в своей Симбирской деревне, где и женился на девице Авдотье Васильевне Ю., дочери бедного тамошнего дворянина. Нас было девять человек детей. Все мои братья и сестры умерли во младенчестве.	1
+2	2	Матушка была еще мною брюхата, как уже я был записан в Семеновский полк сержантом, по милости майора гвардии князя В., близкого нашего родственника. Если бы паче всякого чаяния матушка родила дочь, то батюшка объявил бы куда следовало о смерти неявившегося сержанта, и дело тем бы и кончилось. Я считался в отпуску до окончания наук. В то время воспитывались мы не по-нонешнему. С пятилетнего возраста отдан я был на руки стремянному Савельичу, за трезвое поведение пожалованному мне в дядьки. Под его надзором на двенадцатом году выучился я русской грамоте и мог очень здраво судить о свойствах борзого кобеля. В это время батюшка нанял для меня француза, мосье Бопре, которого выписали из Москвы вместе с годовым запасом вина и прованского масла. Приезд его сильно не понравился Савельичу. «Слава богу, — ворчал он про себя, — кажется, дитя умыт, причесан, накормлен. Куда как нужно тратить лишние деньги и нанимать мусье, как будто и своих людей не стало!»	1
+4	4	Прачка Палашка, толстая и рябая девка, и кривая коровница Акулька как-то согласились в одно время кинуться матушке в ноги, винясь в преступной слабости и с плачем жалуясь на мусье, обольстившего их неопытность. Матушка шутить этим не любила и пожаловалась батюшке. У него расправа была коротка. Он тотчас потребовал каналью француза. Доложили, что мусье давал мне свой урок. Батюшка пошел в мою комнату. В это время Бопре спал на кровати сном невинности. Я был занят делом. Надобно знать, что для меня выписана была из Москвы географическая карта. Она висела на стене безо всякого употребления и давно соблазняла меня шириною и добротою бумаги. Я решился сделать из нее змей и, пользуясь сном Бопре, принялся за работу. Батюшка вошел в то самое время, как я прилаживал мочальный хвост к Мысу Доброй Надежды. Увидя мои упражнения в географии, батюшка дернул меня за ухо, потом подбежал к Бопре, разбудил его очень неосторожно и стал осыпать укоризнами. Бопре в смятении хотел было привстать и не мог: несчастный француз был мертво пьян. Семь бед, один ответ. Батюшка за ворот приподнял его с кровати, вытолкал из дверей и в тот же день прогнал со двора, к неописанной радости Савельича. Тем и кончилось мое воспитание.	1
+5	1	«Мой дядя самых честных правил,\nКогда не в шутку занемог,\nОн уважать себя заставил\nИ лучше выдумать не мог.\nЕго пример другим наука;\nНо, боже мой, какая скука\nС больным сидеть и день и ночь,\nНе отходя ни шагу прочь!\nКакое низкое коварство\nПолуживого забавлять,\nЕму подушки поправлять,\nПечально подносить лекарство,\nВздыхать и думать про себя:\nКогда же черт возьмет тебя!»	2
+6	2	\nЛетя в пыли на почтовых,\nВсевышней волею Зевеса\nНаследник всех своих родных.\nДрузья Людмилы и Руслана!\nС героем моего романа\nБез предисловий, сей же час\nПозвольте познакомить вас:\nОнегин, добрый мой приятель,\nРодился на брегах Невы,\nГде, может быть, родились вы\nИли блистали, мой читатель;\nТам некогда гулял и я:\nНо вреден север для меня 1.	2
+7	3	\nДолгами жил его отец,\nДавал три бала ежегодно\nИ промотался наконец.\nСудьба Евгения хранила:\nСперва Madame за ним ходила,\nПотом Monsieur ее сменил.\nРебенок был резов, но мил.\nMonsieur l'Abbé, француз убогой,\nЧтоб не измучилось дитя,\nУчил его всему шутя,\nНе докучал моралью строгой,\nСлегка за шалости бранил\nИ в Летний сад гулять водил.\n	3
+3	3	Бопре в отечестве своем был парикмахером, потом в Пруссии солдатом, потом приехал в Россию pour etre outchitel 1, не очень понимая значение этого слова. Он был добрый малый, но ветрен и беспутен до крайности. Главною его слабостию была страсть к прекрасному полу; нередко за свои нежности получал он толчки, от которых охал по целым суткам. К тому же не был он (по его выражению) и врагом бутылки, т. е. (говоря по-русски) любил хлебнуть лишнее. Но как вино подавалось у нас только за обедом, и то по рюмочке, причем учителя обыкновенно и обносили, то мой Бопре очень скоро привык к русской настойке и даже стал предпочитать ее винам своего отечества, как не в пример более полезную для желудка. Мы тотчас поладили, и хотя по контракту обязан он был учить меня по-французски, по-немецки и всем наукам, но он предпочел наскоро выучиться от меня кое-как болтать по-русски, — и потом каждый из нас занимался уже своим делом. Мы жили душа в душу. Другого ментора я и не желал. Но вскоре судьба нас разлучила, и вот по какому случаю:	1
+\.
+
+
+--
+-- Name: author_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.author_id_seq', 3, true);
+
+
+--
+-- Name: book_author_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.book_author_id_seq', 5, true);
+
+
+--
+-- Name: book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.book_id_seq', 4, true);
+
+
+--
+-- Name: page_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.page_id_seq', 7, true);
+
+
+--
+-- Name: author author_pk; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.author
+    ADD CONSTRAINT author_pk PRIMARY KEY (id);
+
+
+--
+-- Name: book_author book_author_pk; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.book_author
+    ADD CONSTRAINT book_author_pk PRIMARY KEY (id);
+
+
+--
+-- Name: book book_pk; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.book
+    ADD CONSTRAINT book_pk PRIMARY KEY (id);
+
+
+--
+-- Name: page page_pk; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.page
+    ADD CONSTRAINT page_pk PRIMARY KEY (id);
+
+
+--
+-- Name: author_name_index; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX author_name_index ON public.author USING btree (name);
+
+
+--
+-- Name: book_name_index; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX book_name_index ON public.book USING btree (name);
+
+
+--
+-- Name: book_author book_author_author_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.book_author
+    ADD CONSTRAINT book_author_author_id_fk FOREIGN KEY (author_id) REFERENCES public.author(id);
+
+
+--
+-- Name: book_author book_author_book_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.book_author
+    ADD CONSTRAINT book_author_book_id_fk FOREIGN KEY (book_id) REFERENCES public.book(id);
+
+
+--
+-- Name: page page_book_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.page
+    ADD CONSTRAINT page_book_id_fk FOREIGN KEY (book_id) REFERENCES public.book(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
